@@ -222,7 +222,7 @@ Receiver Operating Characteristic (ROC) curves were plotted for all three models
 
 The Area Under the Curve (ROC-AUC) was used to evaluate each model's ability to distinguish between churn and non-churn customers.
 
-![ROC Curves](assets/roc-curve.png)
+![ROC Curves](assets/roc-curves.png)
 
 ---
 
