@@ -54,8 +54,8 @@ Instead of loading the CSV directly into pandas, the dataset is first imported i
 Database:
 
 - PostgreSQL
-- Database: `churn_db`
-- Table: `customers`
+- Database: `telco-customer`
+- Table: `customer_churn`
 
 The dataset is accessed from Python using SQLAlchemy.
 
@@ -146,7 +146,7 @@ The parameters were updated using Batch Gradient Descent:
 
 Training convergence was monitored by plotting the loss after every iteration.
 
-> **Insert Loss vs Iteration plot here**
+![Loss Convergence](assets/gradient-descent-convergence.png)
 
 ---
 
@@ -198,7 +198,7 @@ Hyperparameters:
 |--------|----------:|-------:|---------:|--------:|--------:|------------------:|
 | Logistic Regression | 0.7982 | 0.6398 | 0.5508 |0.5920 | 0.8325 | 3.9764|
 | KNN | 0.7939 | 0.6214 | 0.5749 | 0.5972 | 0.8236 | 0.7542 |
-| SVM (RBF) | 0.7953 | 0.6414 | 0.5214 | 0.5752 | 0.8828 | 59.9477 |
+| SVM (RBF) | 0.7953 | 0.6414 | 0.5214 | 0.5752 | 0.8228 | 59.9477 |
 
 ---
 
@@ -249,16 +249,23 @@ Model selection should therefore be guided by business objectives rather than ac
 
 Based on the evaluation metrics, the recommended model is:
 
-> **Replace with your best-performing model (e.g., SVM with RBF Kernel).**
+Among the three evaluated models, **Logistic Regression** is selected as the final model.
 
-Justification:
+Although KNN achieved the highest recall (0.5749) and F1-score (0.5972), the improvements over Logistic Regression are very small (approximately 2–3 percentage points in recall and only 0.005 in F1-score). In contrast, Logistic Regression achieved the highest overall accuracy (79.82%) and the highest ROC-AUC (0.8325), indicating that it provides the best overall discrimination between churn and non-churn customers across different classification thresholds.
 
-- Highest ROC-AUC
-- Strong recall for the churn class
-- Best balance between precision and recall
-- Most suitable for minimizing costly false negatives in a customer retention setting
+Logistic Regression also required only about **4 seconds** to train, compared to almost **60 seconds** for the SVM model, making it significantly more computationally efficient while delivering better predictive performance. Although KNN trained faster, it produced lower accuracy, lower precision, and a lower ROC-AUC than Logistic Regression.
 
-Although another model may achieve slightly higher accuracy, prioritizing recall better aligns with the business objective of identifying customers who are likely to churn.
+Another advantage of Logistic Regression is its interpretability. Since the model produces coefficients for each feature, it is possible to understand how individual customer attributes influence the likelihood of churn. This level of interpretability is particularly valuable in business applications, where understanding *why* a customer is predicted to churn is often as important as the prediction itself.
+
+## Discussion on Class Imbalance
+
+The dataset is moderately imbalanced, with approximately **73.5% non-churn customers** and **26.5% churn customers**. In customer retention problems, a **false negative** (predicting that a customer will not churn when they actually do) is generally more costly than a false positive because it represents a missed opportunity to retain a customer.
+
+If the primary business objective is to identify as many potential churners as possible, **recall for the churn class** becomes more important than overall accuracy. Under this criterion, **KNN** performs slightly better because it correctly identifies a larger proportion of churning customers.
+
+However, the recall improvement offered by KNN is relatively modest (57.49% vs. 55.08%), while Logistic Regression provides better accuracy, higher precision, and the highest ROC-AUC. This means Logistic Regression achieves a stronger overall balance between correctly identifying churners and minimizing false alarms.
+
+Therefore, **Logistic Regression is recommended as the final model** because it offers the best overall trade-off between predictive performance, computational efficiency, and model interpretability. If the business later decides that maximizing customer retention is more important than minimizing false positives, the decision threshold of the Logistic Regression model can be lowered below 0.5 to increase recall without changing the underlying model.
 
 ---
 
@@ -321,10 +328,10 @@ pip install -r requirements.txt
 Create a PostgreSQL database named:
 
 ```
-churn_db
+telco-customer
 ```
 
-Import the Telco Customer Churn dataset into the `customers` table.
+Import the Telco Customer Churn dataset into the `customer_churn` table.
 
 ---
 
