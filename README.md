@@ -62,10 +62,7 @@ The dataset is accessed from Python using SQLAlchemy.
 Example query:
 
 ```python
-df = pd.read_sql(
-    "SELECT * FROM customers",
-    engine
-)
+df = pd.read_sql("SELECT * FROM customers", engine)
 ```
 
 This approach separates raw data storage from the machine learning pipeline and better reflects a production-style workflow.
@@ -141,23 +138,11 @@ The implementation includes:
 
 The gradient used for optimization was derived manually:
 
-\[
-\nabla J(\theta)
-=
-\frac{1}{m}
-X^T(\hat y-y)
-\]
+\[\nabla J(\theta)=\frac{1}{m}X^T(\hat y-y)\]
 
 The parameters were updated using Batch Gradient Descent:
 
-\[
-\theta
-=
-\theta
--
-\alpha
-\nabla J
-\]
+\[\theta=\theta-\alpha\nabla J\]
 
 Training convergence was monitored by plotting the loss after every iteration.
 
@@ -172,9 +157,7 @@ The manually implemented Logistic Regression was validated against Scikit-learn'
 Scikit-learn configuration:
 
 ```python
-LogisticRegression(
-    penalty=None
-)
+LogisticRegression(penalty=None)
 ```
 
 This disables regularization, ensuring a fair comparison.
@@ -213,9 +196,9 @@ Hyperparameters:
 
 | Model | Precision | Recall | F1 Score | ROC-AUC | Training Time (s) |
 |--------|----------:|-------:|---------:|--------:|------------------:|
-| Logistic Regression | | | | | |
-| KNN | | | | | |
-| SVM (RBF) | | | | | |
+| Logistic Regression | 0.7982| 0.6398| 0.5920| 0.8325| 3.9764|
+| KNN | 0.7939| 0.6214| 0.5749| 0.5972| 0.8236|
+| SVM (RBF) | 0.7953| 0.6414| 0.5214| 0.5752| 0.8828|
 
 *(Replace the values with your experimental results.)*
 
@@ -231,7 +214,7 @@ Confusion matrices were generated for:
 
 These provide a clearer understanding of false positives and false negatives than accuracy alone.
 
-> **Insert confusion matrix images here**
+![Confusion Matrices](assets/confusion_matrices.png)
 
 ---
 
@@ -241,7 +224,7 @@ Receiver Operating Characteristic (ROC) curves were plotted for all three models
 
 The Area Under the Curve (ROC-AUC) was used to evaluate each model's ability to distinguish between churn and non-churn customers.
 
-> **Insert ROC Curve here**
+![ROC Curves](assets/roc_curve.png)
 
 ---
 
@@ -300,15 +283,16 @@ Although another model may achieve slightly higher accuracy, prioritizing recall
 ```
 churn-project/
 │
+|── assets/
+|
 ├── data/
-│
-├── notebooks/
-│   └── telco_customer_churn.ipynb
 │
 ├── src/
 │   ├── logistic_regression.py
 │   └── ...
 │
+|── telco_customer_churn.ipynb
+|
 ├── .env
 ├── requirements.txt
 └── README.md
@@ -374,6 +358,3 @@ Run all cells to reproduce the analysis, model training, evaluation, and visuali
 
 ---
 
-# Author
-
-**Your Name**
