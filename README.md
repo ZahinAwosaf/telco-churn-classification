@@ -194,13 +194,11 @@ Hyperparameters:
 
 # Performance Comparison
 
-| Model | Precision | Recall | F1 Score | ROC-AUC | Training Time (s) |
+| Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC | Training Time (s) |
 |--------|----------:|-------:|---------:|--------:|------------------:|
-| Logistic Regression | 0.7982| 0.6398| 0.5920| 0.8325| 3.9764|
-| KNN | 0.7939| 0.6214| 0.5749| 0.5972| 0.8236|
-| SVM (RBF) | 0.7953| 0.6414| 0.5214| 0.5752| 0.8828|
-
-*(Replace the values with your experimental results.)*
+| Logistic Regression | 0.7982 | 0.6398 | 0.5508 |0.5920 | 0.8325 | 3.9764|
+| KNN | 0.7939 | 0.6214 | 0.5749 | 0.5972 | 0.8236 | 0.7542 |
+| SVM (RBF) | 0.7953 | 0.6414 | 0.5214 | 0.5752 | 0.8828 | 59.9477 |
 
 ---
 
